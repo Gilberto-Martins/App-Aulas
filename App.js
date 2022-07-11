@@ -1,23 +1,35 @@
-import { Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Alert, Button, SafeAreaView, Text, View } from 'react-native';
+import { css } from './assets/css/Css';
 import Page from './views/Pages';
-import {css} from './assets/css/Css'
+
 
 export default function App() {
+  const [product, setProduct] = useState('bola');
+  const [quantity, setQuantity] = useState(0);
+
+  
+  useEffect( ()=> {
+    if (quantity > 0) {
+      Alert.alert('Novo produto adicionado')
+    }
+  }, [quantity])
+  
+
   const props = {
     empresa: 'Webdesign em foco',
-    name: 'Gilberto'
+    name: 'Gilberto',
+    produto: product,
+    quantidade: quantity,
   }
 
   return (
-    <View style={css.container}>
-      <Text style={css.text}>Open up App.js to start working on your app!</Text>
-      <Page {...props} />
-      {/**
-        <Page empresa='Programação'/>
-        <Page empresa='Mobile'/>
-        <Page empresa='Devs'/>
-       */}
-
-    </View>
+    <SafeAreaView style={css.container}>
+      <View style={css.container}>
+        <Page {...props} />
+        <Button title='Adicionar Proutos' onPress={() => setQuantity(quantity + 1)}></Button>
+        <Text>{product}</Text>
+      </View>
+    </SafeAreaView>
   );
 }
